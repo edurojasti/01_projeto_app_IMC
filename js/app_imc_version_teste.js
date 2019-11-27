@@ -40,14 +40,32 @@ $(document).ready(()=>{
         let peso = document.getElementById("peso").value
         let altura = document.getElementById("altura").value
 
+        peso = peso.replace(',' , '.')
+        altura = altura.replace(',', '.')
+        console.log(peso, altura)
+
         if(peso == '' || peso == null || altura == '' || altura == null){
             $("#msg").show()
             $("#exibindoIMC").hide()
             $("#modalAlert").modal()
-        }else{
+        }
+        else if(peso > 250 || altura > 350){
+            // peso = peso.replace('.', '')
+            // altura = altura.replace('.','')
+            // console.log(peso.length)
+            // console.log(altura.length)
+
+            $("#msg").show()
+            $("#msg").text('Peso ou Altura com valor exagerados!')
+            $("#exibindoIMC").hide()
+            $("#modalAlert").modal()
+        }
+        else{
             $("#modalAlert").modal()
             $("#msg").hide()
             $("#exibindoIMC").show()
+
+            
 
             altura = altura / 100
             //gerando o IMC
@@ -117,11 +135,18 @@ $(document).ready(()=>{
     })
 
     //RECUPERANDO OS IMCS
-    $("#exibirHistorico").click(()=>{
+    $("#exibirHistorico, .btnEXCLUIR").click(()=>{
         let xKey = localStorage.getItem('keyID')
         let listarTudo = []
         for(let i = 1; i <= xKey; i++){
-            listarTudo.push(JSON.parse(localStorage.getItem(i)))
+
+            let xh = JSON.parse(localStorage.getItem(i))
+            if(xh === null){
+                continue
+            }
+            xh.id = i
+            listarTudo.push(xh)
+            console.log(xh)
         }
         console.log(listarTudo)
         console.log(listarTudo.length)
@@ -134,10 +159,14 @@ $(document).ready(()=>{
 
             //colunas
             linhaTabela.insertCell(0).innerHTML = `${listarTudo[e].dReg}`
-            linhaTabela.insertCell(1).innerHTML = `${listarTudo[e].peso}`
-            linhaTabela.insertCell(2).innerHTML = `${listarTudo[e].altura}`
-            linhaTabela.insertCell(3).innerHTML = `${listarTudo[e].imc}`
-            linhaTabela.insertCell(4).innerHTML = `${listarTudo[e].inf}`
+            // linhaTabela.insertCell(1).innerHTML = `${listarTudo[e].peso}`
+            // linhaTabela.insertCell(2).innerHTML = `${listarTudo[e].altura}`
+            linhaTabela.insertCell(1).innerHTML = `${listarTudo[e].imc}`
+            linhaTabela.insertCell(2).innerHTML = `${listarTudo[e].inf}`
+            linhaTabela.insertCell(3).innerHTML = `
+            <button id="delete${listarTudo[e].id}" onclick="localStorage.removeItem('${listarTudo[e].id}'); alert('IMC deletado com sucesso!'); location.reload()" class="btnEXCLUIR btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Limpar">
+                <i class="fas fa-trash-alt"></i>
+            </button>`
         }
     })
 
