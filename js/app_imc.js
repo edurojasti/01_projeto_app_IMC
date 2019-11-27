@@ -106,7 +106,6 @@ $(document).ready(()=>{
         $("#telaRegistrosIMC").addClass("classeDisplayNONE")
         $("#telaRegistrosIMC").addClass("animated bounceInRight")
         $("#telaIMC").addClass("animated bounceInLeft")
-        // $("#telaRegistrosIMC").toggleClass("styleTop")
     })
     
     //limpar os campos

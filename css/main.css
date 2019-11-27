@@ -480,7 +480,8 @@ iframe {
   flex-direction: column;
   margin: auto auto;
 }
-/* 
-.styleTop{
-  margin-top: -5000px;
-} */
+
+.btnSalvarMSG{
+  display: flex;
+  flex-direction: row;
+}
