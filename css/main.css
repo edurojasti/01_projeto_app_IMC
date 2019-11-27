@@ -485,3 +485,23 @@ iframe {
   display: flex;
   flex-direction: row;
 }
+
+/* @media (min-width: 420px){
+  th{
+    font-size: 15px !important;
+  }
+  
+  td{
+    font-size: 13px !important;
+  }
+} */
+
+@media only screen and (max-width: 450px) {
+  th{
+    font-size: 15px !important;
+  }
+  
+  td{
+    font-size: 13px !important;
+  }
+}
