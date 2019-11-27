@@ -123,26 +123,25 @@ $(document).ready(()=>{
         for(let i = 1; i <= xKey; i++){
             listarTudo.push(JSON.parse(localStorage.getItem(i)))
         }
-        
+        console.log(listarTudo)
+        console.log(listarTudo.length)
         for(let e = 0; e < listarTudo.length; e++){
             //tbody da tabela
             let tabelaIMCS = document.getElementById('corpoTableRegistrosIMC')
 
             //criando a linha <tr>
             let linhaTabela =  tabelaIMCS.insertRow()
-                
+
             //colunas
             linhaTabela.insertCell(0).innerHTML = `${listarTudo[e].dReg}`
             linhaTabela.insertCell(1).innerHTML = `${listarTudo[e].peso}`
             linhaTabela.insertCell(2).innerHTML = `${listarTudo[e].altura}`
             linhaTabela.insertCell(3).innerHTML = `${listarTudo[e].imc}`
             linhaTabela.insertCell(4).innerHTML = `${listarTudo[e].inf}`
-
-        //     dReg : fecha,
-        //     peso : peso,
-        //     altura: altura,
-        //     imc : imcValor.value,
-        //     inf : imcDesc.value
         }
+    })
+
+    $("#limpar").click(()=>{
+        $("#peso, #altura").val("")
     })
 })
