@@ -56,7 +56,7 @@ $(document).ready(()=>{
             // console.log(altura.length)
 
             $("#msg").show()
-            $("#msg").text('Peso ou Altura com valor exagerados!')
+            $("#msg").text('Peso ou Altura com valor exagerado!')
             $("#exibindoIMC").hide()
             $("#modalAlert").modal()
         }
