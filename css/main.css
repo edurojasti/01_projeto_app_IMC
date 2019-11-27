@@ -505,3 +505,9 @@ iframe {
     font-size: 13px !important;
   }
 }
+
+@media print {
+  #botoess{
+    display: none;
+  }
+}
