@@ -50,11 +50,6 @@ $(document).ready(()=>{
             $("#modalAlert").modal()
         }
         else if(peso > 250 || altura > 350){
-            // peso = peso.replace('.', '')
-            // altura = altura.replace('.','')
-            // console.log(peso.length)
-            // console.log(altura.length)
-
             $("#msg").show()
             $("#msg").text('Peso ou Altura com valor exagerado!')
             $("#exibindoIMC").hide()
@@ -64,8 +59,6 @@ $(document).ready(()=>{
             $("#modalAlert").modal()
             $("#msg").hide()
             $("#exibindoIMC").show()
-
-            
 
             altura = altura / 100
             //gerando o IMC
@@ -86,15 +79,18 @@ $(document).ready(()=>{
             //data do dia para registrar
             let objData = new Date()
             let dia = objData.getDate()
-            let mes = objData.getMonth() + 1
+            let mes = objData.getMonth()
+            mes = parseInt(mes) + 1
             let ano = objData.getFullYear()
 
-            if(dia < 10 || mes < 10){
+            if(dia < 10 ){
                 dia = '0'+ dia
+            }else if(mes < 10){
                 mes = '0'+ mes
             }
+            
             let fecha = `${dia}/${mes}/${ano}`
-
+           
             //objeto para salvar IMC
             let salvarDados = {
                 dReg : fecha,
@@ -125,7 +121,6 @@ $(document).ready(()=>{
                 
                 $("#msgSucess").fadeIn()
             })
-         
 
             $("#fecharModal").click(()=>{
                 $("#msgSucess").fadeOut()
