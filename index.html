@@ -28,10 +28,6 @@
             
             <!-- TELA INICIAL DE CADASTROS DE IMC -->
             <div class="wrap-login100 mb-3" id="telaIMC">
-                <!-- <div class="login100-pic js-tilt" data-tilt>
-                    <img src="images/img04.png" alt="IMG">
-                </div> -->
-
                 <form class="login100-form validate-form" action="#">
                     <span class="login100-form-title">
                         <!-- WebApp - IMC -->
@@ -57,27 +53,38 @@
                     </div>
                 </form>
 
+                <!-- ======================= BOTÕES ======================= -->
                 <div class="container" id="areaBTN">
                     <div class="row d-flex justify-content-center mt-4">
                         <div class="col-xs-4">
-                            <div class="container-btn btn-info ml-2 mr-2">
-                                <button id="calcIMC" class="btn btn-info btn-lg" data-toggle="tooltip" data-placement="bottom" title="Calcular IMC">
-                                    <i class="fas fa-calculator"></i>
-                                </button>
+                            <div class="container-btn btn-info ml-4 mr-4">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button id="calcIMC" class="btn btn-info btn-lg" data-toggle="tooltip" data-placement="bottom" title="Calcular IMC">
+                                            <i class="fas fa-calculator"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <p class="mt-1 text-left" style="font-size: 14px;">calcular</p>
+                                    </div>
+                                </div>
+                                
                             </div>
                         </div>
                         <div class="col-xs-4">
-                            <div class="container-btn btn-info ml-2 mr-2">
+                            <div class="container-btn btn-info ml-4 mr-4">
                                 <button id="exibirHistorico" class="btn btn-info btn-lg" data-toggle="tooltip" data-placement="bottom" title="Histórico">
                                     <i class="fas fa-table"></i>
                                 </button>
+                                <p class="mt-1 text-left" style="font-size: 14px;">Histórico</p>
                             </div>
                         </div>
                         <div class="col-xs-4">
-                            <div class="container-btn btn-info ml-2 mr-2">
+                            <div class="container-btn btn-info ml-4 mr-4">
                                 <button id="limpar" class="btn btn-info btn-lg" data-toggle="tooltip" data-placement="bottom" title="Limpar">
                                     <i class="fas fa-broom"></i>
                                 </button>
+                                <p class="mt-1 text-left" style="font-size: 14px;">Limpar</p>
                             </div>
                         </div>
                     </div>

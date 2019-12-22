@@ -173,7 +173,7 @@ iframe {
 }
 
 .wrap-login100 {
-  width: 960px;
+  /* width: 960px; */
   background: #fff;
   border-radius: 10px;
   overflow: hidden;
