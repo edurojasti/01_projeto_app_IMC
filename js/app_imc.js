@@ -1,17 +1,6 @@
 $(document).ready(()=>{
-    // $("#telaIMC").css('animated fadeIn')
-    //pegando os dados do dia atual
-    let pegarDate = new Date()
-    let diaAtual = pegarDate.getDate()
-    let mes = pegarDate.getMonth() + 1
-    let ano = pegarDate.getUTCFullYear()
+    $("#msg, #msgSucess").hide()
 
-    if(mes < 10){ mes = '0'+ mes}
-    let dataAtual = diaAtual + '/' + mes + '/' + ano
-
-    // console.log(dataAtual)
-
-    $("#telaRegistrosIMC").addClass("classeDisplayNONE")
     let descIMC = [
         'Baixo peso, muito grave',
         'Baixo peso, grave',
@@ -23,161 +12,160 @@ $(document).ready(()=>{
         'Obesidade grau III'
     ]
 
-    // objeto IMC
-    class Imc{
-        constructor(peso, altura){
-            this.peso = peso
-            this.altura = altura
-            this.desc = null
-            this.dataRegistro = dataAtual
-        }
-
-        calcularIMC(){
-            let valorIMC = 0
-            let descx = null
-            valorIMC = this.peso / (this.altura * this.altura)
-            valorIMC = valorIMC.toFixed(2)
-            
-            if(valorIMC < 16){this.desc = descIMC[0]}
-            if(valorIMC >= 16.00 && valorIMC <=16.99){this.desc = descIMC[1]}
-            if(valorIMC >= 17.00 && valorIMC <=18.49){this.desc = descIMC[2]}
-            if(valorIMC >= 18.50 && valorIMC <=24.99){this.desc = descIMC[3]}
-            if(valorIMC >= 25.00 && valorIMC <=29.99){this.desc = descIMC[4]}
-            if(valorIMC >= 30.00 && valorIMC <=34.99){this.desc = descIMC[5]}
-            if(valorIMC >= 35.00 && valorIMC <=39.99){this.desc = descIMC[6]}
-            if(valorIMC >= 40.00){this.desc = descIMC[7]}
-            
-            descx = this.desc
-
-            let arrayDados = [valorIMC , descx]
-
-            return arrayDados
-        }
-
-        pegarID(){
-            // let valueKey = 0
-            let valueKey = localStorage.getItem('numerosKEY')
-
-            if(valueKey == undefined){
-                valueKey = 0
-            }
-            else{
-                valueKey = parseInt(valueKey)
-            }
-
-            return valueKey + 1
-        }
-
-        saveIMC(x){
-            let idAtual = this.pegarID()
-
-            // setando ID
-            localStorage.setItem('numerosKEY', idAtual)
-
-            //setando elementos
-            localStorage.setItem(idAtual, x)
-        }
-
-        getIMC(){
-            let valorID = localStorage.getItem('numerosKEY')
-            console.log(valorID)
-
-            let arrayIMC = []
-            for(var i = 1; i <= valorID; i++){
-                var itemIMC = JSON.parse(localStorage.getItem(i))
-                arrayIMC.push(itemIMC)
-            }
-            return arrayIMC
-        }
-    }
-
+    $("#telaRegistrosIMC").addClass("classeDisplayNONE")    
+    
     // botao tela consulta
     $("#exibirHistorico").click(()=>{
-        // $("#telaRegistrosIMC").toggleClass("styleTop")
-        $("#telaIMC").addClass("classeDisplayNONE")
-        $("#telaRegistrosIMC").removeClass("classeDisplayNONE")
-        $("#telaRegistrosIMC").addClass("animated bounceInRight")
+       // $("#telaRegistrosIMC").toggleClass("styleTop")
+       $("#telaIMC").addClass("classeDisplayNONE")
+       $("#telaRegistrosIMC").removeClass("classeDisplayNONE")
+       $("#telaRegistrosIMC").addClass("animated bounceInRight")
 
     })
 
     // botao para exibir voltar tela inicial
     $("#voltarTelaInicial").click(()=>{    
-        $("#telaIMC").removeClass("classeDisplayNONE")
-        $("#telaRegistrosIMC").addClass("classeDisplayNONE")
-        $("#telaRegistrosIMC").addClass("animated bounceInRight")
-        $("#telaIMC").addClass("animated bounceInLeft")
-    })
-    
-    //limpar os campos
-    $("#limpar").click(()=>{
-        let vPeso = $("#peso").val('')
-        let vAltura = $("#altura").val('')
+       $("#telaIMC").removeClass("classeDisplayNONE")
+       $("#telaRegistrosIMC").addClass("classeDisplayNONE")
+       $("#telaRegistrosIMC").addClass("animated bounceInRight")
+       $("#telaIMC").addClass("animated bounceInLeft")
     })
 
-    //calcular o IMC
+    // Calculando IMC
     $("#calcIMC").click(()=>{
-        let vPeso = $("#peso").val().replace(",", ".")
-        let vAltura = $("#altura").val().replace(",", ".")
-        
-        if(vAltura == "" || vPeso == ""){
-            $("#msg").text('Verifique os campos não preenchidos!')
-            $("#descricaoIMC").text(' ')
-            $("#salvar").hide()
+        //FORM DO MODAL
+        let imcValor = document.getElementById('imcValor')
+        let imcDesc = document.getElementById('imcDesc')
+
+        let peso = document.getElementById("peso").value
+        let altura = document.getElementById("altura").value
+
+        peso = peso.replace(',' , '.')
+        altura = altura.replace(',', '.')
+        console.log(peso, altura)
+
+        if(peso == '' || peso == null || altura == '' || altura == null){
+            $("#msg").show()
+            $("#exibindoIMC").hide()
             $("#modalAlert").modal()
-            return false
         }
-
-        vPeso = parseFloat(vPeso)
-        vAltura = parseFloat(vAltura)
-
-        if(vPeso > 200){
-            $("#msg").text("Peso exagerado!")
+        else if(peso > 250 || altura > 350 || peso < 0 || altura < 0 ){
+            $("#msg").show()
+            $("#msg").text('O valor de peso ou altura são inválidos!')
+            $("#exibindoIMC").hide()
             $("#modalAlert").modal()
-            $("#salvar").hide()
         }
-
-        else if(vAltura > 300){
-            $("#msg").text("Altura exagerada!")
-            $("#modalAlert").modal()
-            $("#salvar").hide()
-        }
-
         else{
-            $("#salvar").show()
-            vAltura = vAltura / 100
-        }
-        
-            let calc = new Imc(vPeso, vAltura)
-            let resultado = calc.calcularIMC()
-            // let x = JSON.stringify(calc)
-
-            $("#msg").text("Seu IMC é: " + resultado[0])
-            $("#descricaoIMC").text(`Descrição: ${resultado[1]}`)
-            
-            // console.log(calc)
-            // console.log(x)
-
             $("#modalAlert").modal()
-            vPeso = $("#peso").val(' ')
-            vAltura = $("#altura").val(' ')
+            $("#msg").hide()
+            $("#exibindoIMC").show()
 
-            //salvando no LocalStorage
-            $("#salvar").click(()=>{
-                calc.saveIMC(JSON.stringify(calc))
-                console.log(calc)
-                // console.log(x)
+            altura = altura / 100
+            //gerando o IMC
+            let imc = peso / (altura*altura)
+
+            //exibindo dados...
+                if(imc < 16){imcDesc.value = descIMC[0]}
+                if(imc >= 16.00 && imc <=16.99){imcDesc.value = descIMC[1]}
+                if(imc >= 17.00 && imc <=18.49){imcDesc.value = descIMC[2]}
+                if(imc >= 18.50 && imc <=24.99){imcDesc.value = descIMC[3]}
+                if(imc >= 25.00 && imc <=29.99){imcDesc.value = descIMC[4]}
+                if(imc >= 30.00 && imc <=34.99){imcDesc.value = descIMC[5]}
+                if(imc >= 35.00 && imc <=39.99){imcDesc.value = descIMC[6]}
+                if(imc >= 40.00){imcDesc.value = descIMC[7]}
+
+                imcValor.value = imc.toFixed(2)
+            
+            //data do dia para registrar
+            let objData = new Date()
+            let dia = objData.getDate()
+            let mes = objData.getMonth()
+            mes = parseInt(mes) + 1
+            let ano = objData.getFullYear()
+
+            if(dia < 10 ){
+                dia = '0'+ dia
+            }else if(mes < 10){
+                mes = '0'+ mes
+            }
+            
+            let fecha = `${dia}/${mes}/${ano}`
+           
+            //objeto para salvar IMC
+            let salvarDados = {
+                dReg : fecha,
+                peso : peso,
+                altura: altura,
+                imc : imcValor.value,
+                inf : imcDesc.value
+            }
+
+            let bdIMC = JSON.stringify(salvarDados)
+
+            //SALVAR e PEGAR O REGISTRO DOS IMCS
+            let salvar = document.getElementById("salvar")
+
+            salvar.onclick = (()=>{
+                let pegarKeyID = localStorage.getItem('keyID')
+                if(pegarKeyID ==  null){
+                    pegarKeyID = 1
+                    localStorage.setItem('keyID', pegarKeyID)
+                }
+                else{
+                    pegarKeyID = parseInt(pegarKeyID)
+                    pegarKeyID++
+                    localStorage.setItem('keyID', pegarKeyID)
+                }
+                console.log(pegarKeyID)
+                localStorage.setItem(pegarKeyID, bdIMC)
+                
+                $("#msgSucess").fadeIn()
             })
+
+            $("#fecharModal").click(()=>{
+                $("#msgSucess").fadeOut()
+                $("#peso, #altura, #imcValor, #imcDesc").val("")
+            })
+        }        
     })
 
+    //RECUPERANDO OS IMCS
+    $("#exibirHistorico, .btnEXCLUIR").click(()=>{
+        let xKey = localStorage.getItem('keyID')
+        let listarTudo = []
+        for(let i = 1; i <= xKey; i++){
 
-    // criando o card de Consulta de IMC
+            let xh = JSON.parse(localStorage.getItem(i))
+            if(xh === null){
+                continue
+            }
+            xh.id = i
+            listarTudo.push(xh)
+            console.log(xh)
+        }
+        console.log(listarTudo)
+        console.log(listarTudo.length)
+        for(let e = 0; e < listarTudo.length; e++){
+            //tbody da tabela
+            let tabelaIMCS = document.getElementById('corpoTableRegistrosIMC')
 
+            //criando a linha <tr>
+            let linhaTabela =  tabelaIMCS.insertRow()
 
-
-    //pegando os dados e salvando
-    $("#exibirHistorico").click(()=>{
-        let pegarHistorico = new Imc()
-        console.log(pegarHistorico.getIMC())
+            //colunas
+            linhaTabela.insertCell(0).innerHTML = `${listarTudo[e].dReg}`
+            // linhaTabela.insertCell(1).innerHTML = `${listarTudo[e].peso}`
+            // linhaTabela.insertCell(2).innerHTML = `${listarTudo[e].altura}`
+            linhaTabela.insertCell(1).innerHTML = `${listarTudo[e].imc}`
+            linhaTabela.insertCell(2).innerHTML = `${listarTudo[e].inf}`
+            linhaTabela.insertCell(3).innerHTML = `
+            <button id="delete${listarTudo[e].id}" onclick="localStorage.removeItem('${listarTudo[e].id}'); alert('IMC deletado com sucesso!'); location.reload()" class="btnEXCLUIR btn btn-danger btn-sm" data-toggle="tooltip" data-placement="bottom" title="Limpar">
+                <i class="fas fa-trash-alt"></i>
+            </button>`
+        }
     })
 
+    $("#limpar").click(()=>{
+        $("#peso, #altura").val("")
+    })
 })
