@@ -37,25 +37,36 @@ $(document).ready(()=>{
         let imcValor = document.getElementById('imcValor')
         let imcDesc = document.getElementById('imcDesc')
 
-        let peso = document.getElementById("peso").value
-        let altura = document.getElementById("altura").value
+        let pesoo1 = document.getElementById("peso").value
+        let alturaa1 = document.getElementById("altura").value
 
-        peso = peso.replace(',' , '.')
-        altura = altura.replace(',', '.')
-        console.log(peso, altura)
+        let x = pesoo1.toString() 
+        let z = alturaa1.toString()
 
-        if(peso == '' || peso == null || altura == '' || altura == null){
+        let xx = x.replace(',', '.')
+        let zz = z.replace(',', '.')
+
+        let xxx = xx.replace('.', '')
+        let zzz = zz.replace('.', '')
+
+        let peso = parseFloat(xxx)
+        let altura = parseFloat(zzz)
+
+       
+        if(pesoo1 == '' || pesoo1 == null || alturaa1 == '' || alturaa1 == null){
             $("#msg").show()
             $("#exibindoIMC").hide()
             $("#modalAlert").modal()
         }
         else if(peso > 250 || altura > 350 || peso < 0 || altura < 0 ){
             $("#msg").show()
-            $("#msg").text('O valor de peso ou altura são inválidos!')
+            $("#msg").html('O valor de <b>peso</b> ou <b>altura</b> são inválidos!')
             $("#exibindoIMC").hide()
             $("#modalAlert").modal()
         }
         else{
+            console.log(peso, altura)
+
             $("#modalAlert").modal()
             $("#msg").hide()
             $("#exibindoIMC").show()
@@ -72,7 +83,7 @@ $(document).ready(()=>{
                 if(imc >= 25.00 && imc <=29.99){imcDesc.value = descIMC[4]}
                 if(imc >= 30.00 && imc <=34.99){imcDesc.value = descIMC[5]}
                 if(imc >= 35.00 && imc <=39.99){imcDesc.value = descIMC[6]}
-                if(imc >= 40.00){imcDesc.value = descIMC[7]}
+                if(imc >= 40.00){Math.floor(imcDesc.value = descIMC[7]).toFixed(2)}
 
                 imcValor.value = imc.toFixed(2)
             
