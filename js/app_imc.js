@@ -1,6 +1,5 @@
 $(document).ready(()=>{
     $("#msg, #msgSucess").hide()
-
     let descIMC = [
         'Baixo peso, muito grave',
         'Baixo peso, grave',
